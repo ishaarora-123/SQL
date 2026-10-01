@@ -32,7 +32,7 @@ select team, Player as TopPlayer, Price_in_cr from rankofeachteamplayer where ro
 -- top 2 paid players in each company
 with rankofeachplayer as
 (select Player, team, Price_in_cr, 
-row_number() over(partition by team) as row_num
+row_number() over(partition by team order by Price_in_cr desc) as row_num
 from IPLPlayers)
 select team, Player as TopPlayer, row_num, Price_in_cr from rankofeachplayer where row_num <= 2;
 
