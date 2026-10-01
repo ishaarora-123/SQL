@@ -6,7 +6,6 @@ CREATE TABLE IPLPlayers (
     Role	NVARCHAR(50),
     Team	NVARCHAR(100)
 );
-drop table IPLPlayers;
 
 INSERT INTO IPLPlayers (Player, Price_in_cr, Type, Acquisition, Role, Team) VALUES ('Ruturaj Gaikwad', '18', 'Indian (capped)', 'Retained', 'Batter', 'Chennai Super Kings');
 INSERT INTO IPLPlayers (Player, Price_in_cr, Type, Acquisition, Role, Team) VALUES ('Ravindra Jadeja', '18', 'Indian (capped)', 'Retained', 'All-rounder', 'Chennai Super Kings');
@@ -235,4 +234,4 @@ INSERT INTO IPLPlayers (Player, Price_in_cr, Type, Acquisition, Role, Team) VALU
 INSERT INTO IPLPlayers (Player, Price_in_cr, Type, Acquisition, Role, Team) VALUES ('Kamindu Mendis (Sri Lanka)', '0.75', 'Overseas (capped)', 'Auction', 'All-rounder', 'Sunrisers Hyderabad');
 INSERT INTO IPLPlayers (Player, Price_in_cr, Type, Acquisition, Role, Team) VALUES ('Aniket Verma', '0.3', 'Indian (uncapped)', 'Auction', 'Batter', 'Sunrisers Hyderabad');
 INSERT INTO IPLPlayers (Player, Price_in_cr, Type, Acquisition, Role, Team) VALUES ('Eshan Malinga (Sri Lanka)', '1.2', 'Overseas (uncapped)', 'Auction', 'Bowler', 'Sunrisers Hyderabad');
-INSERT INTO IPLPlayers (Player, Price_in_cr, Type, Acquisition, Role, Team) VALUES ('Sachin Baby', '0.3', 'Indian (uncapped)', 'Auction', 'Batter', 'Sunrisers Hyderabad');
+INSERT INTO IPLPlayers (Player, Price_in_cr, Type, Acquisition, Role, Team) VALUES ('Sachin Baby', '0.3', 'Indian (uncapped)', 'Auction', 'Batter', 'Sunrisers Hyderabad');	

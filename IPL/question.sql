@@ -1,4 +1,20 @@
-select * from IPLPlayers;
+select * from IPLPlayers ;
+
+select distinct(`type`) from IPLPlayers;
+UPDATE IPLPlayers
+SET Type = REPLACE(Type, 'Overseas(', 'Overseas (')
+WHERE Type LIKE 'Overseas%';
+
+ALTER TABLE IPLPlayers
+ADD Players2 NVARCHAR(120);
+UPDATE IPLPlayers
+SET Players2 = TRIM(SUBSTRING_INDEX(Player, '(', 1))
+WHERE Player LIKE '%(%';
+UPDATE IPLPlayers
+SET Player = Players2
+WHERE Player LIKE '%(%';
+ALTER TABLE IPLPlayers
+DROP COLUMN Players2;
 
 -- spending on players of each team
 select Team, sum(Price_in_cr) as total_spending from IPLPlayers group by Team order by total_spending desc;
