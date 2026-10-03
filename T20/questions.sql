@@ -33,7 +33,7 @@ group by Winner order by CountOfWins desc;
 
 -- which team has the highest average winning margin in runs and what is the average margin
 select Winner , 
-round(avg(cast(TRIM(SUBSTRING_INDEX(Margin, 'r', 1)) as signed)),1) as avg_run 
+round(avg(MarginValue),1) as avg_run 
 from T20i
 where Margin like '% runs' 
 group by Winner
@@ -42,7 +42,7 @@ limit 1;
 
 -- which team has the highest average winning margin in wickets and what is the average margin
 select Winner , 
-round(avg(cast(TRIM(SUBSTRING_INDEX(Margin, 'r', 1)) as signed)),1) as avg_wicket
+round(avg(MarginValue),1) as avg_wicket
 from T20i
 where Margin like '% wickets' 
 group by Winner
@@ -99,7 +99,7 @@ where year(MatchDate) = 2024
 group by Winner
 ),
 CAllCount as(
-select IFNULL(count(*),0) as allCount, Team 
+select count(*) as allCount, Team 
 from AllTeams 
 group by Team
 )
