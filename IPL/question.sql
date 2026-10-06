@@ -16,30 +16,30 @@ WHERE Player LIKE '%(%';
 ALTER TABLE IPLPlayers
 DROP COLUMN Players2;
 
--- spending on players of each team
+-- 1. How much is each team spending on its players?
 select Team, sum(Price_in_cr) as total_spending from IPLPlayers group by Team order by total_spending desc;
 
--- top 3 highest-paid allrounder across all teams
+-- 2. Who are the top 3 highest-paid all-rounders?
 select Player, team, Price_in_cr from IPLPlayers where Role = 'All-rounder' order by Price_in_cr desc limit 3;
 
--- highest paid member in each team
+-- 3. Who is the highest-paid player in each team?
 with rankofeachteamplayer as
 (select Player, team, Price_in_cr, 
 row_number() over(partition by team order by Price_in_cr desc) as row_num
 from IPLPlayers)
 select team, Player as TopPlayer, Price_in_cr from rankofeachteamplayer where row_num = 1 order by Price_in_cr desc;
 
--- top 2 paid players in each company
+-- 4. Who are the top 2 highest-paid players in each team?
 with rankofeachplayer as
 (select Player, team, Price_in_cr, 
 row_number() over(partition by team order by Price_in_cr desc) as row_num
 from IPLPlayers)
 select team, Player as TopPlayer, row_num, Price_in_cr from rankofeachplayer where row_num <= 2;
 
--- top 2 paid players in each company
+-- 5. Can the top 2 players of each team be displayed as columns?
 with rankofeachplayer2 as
 (select Player, team, Price_in_cr, 
-row_number() over(partition by team order by Price_in_cr) as row_num
+row_number() over(partition by team order by Price_in_cr desc) as row_num
 from IPLPlayers)
 select team, 
 max(case when row_num = 1 then player end )as TopPlayer,
@@ -49,8 +49,7 @@ max(case when row_num = 2 then Price_in_cr end )as `2ndTopPlayerPrice`
 from rankofeachplayer2
 group by team;
 
--- calculate the percentage contribution of each player's price to their team's total spending
-
+-- 6. What percentage of a team's total spending does each player contribute?
 with sumofeachteam as
 (select Player, team, Price_in_cr, 
 sum(Price_in_cr) over(partition by team) as total
@@ -58,6 +57,7 @@ from IPLPlayers)
 select Player, team, Price_in_cr, 
 round(Price_in_cr/total*100,2) as percent from sumofeachteam;
 
+-- 7. How many players fall into High, Medium and Low price brackets?
 -- classify players as high, medium, low
 -- prize > 15, high
 -- prize between 5 and 15, medium
@@ -76,12 +76,12 @@ select Team, salarybracket, count(*) from pricebracket
 group by Team, salarybracket
 order by Team, salarybracket;
 
--- find average of indian players and compare it with overseas players using subquery?
+-- 8. What is the average price of Indian vs Overseas players?
 (select 'Indian' as `Type`, avg(Price_in_cr) from IPLPlayers where `Type` like '%Indian%')
 union all
 (select 'Overseas' as `Type`, avg(Price_in_cr) from IPLPlayers where `Type` like '%Overseas%');
 
--- select players which have price greater than team average 
+-- 9. Which players are more expensive than their team's average player price?
 with averageofteam as
 (
 select Team, Player, Price_in_cr,
@@ -89,8 +89,7 @@ avg(Price_in_cr) over(partition by team) as TeamAverage from IPLPlayers
 )
 select Player, Team, TeamAverage, Price_in_cr from averageofteam where Price_in_cr > TeamAverage;
 
--- select most expensive player in each role and their price
--- select Role, max(Price_in_cr), Player from IPLPlayers group by Role;
+-- 10. Who is the most expensive player in each role?
 with maxoforeachrole as
 (
 select `Role`, Player,Price_in_cr,
