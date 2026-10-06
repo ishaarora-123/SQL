@@ -119,8 +119,27 @@ a.AirlineID,
 a. Name as AirlineName,
 sum(t.Price) as TotalRevenue,
 count(t.Price) as TotalTickets,
-rank() over(order by sum(t.Price)) as RankOfTotalRevenue
+rank() over(order by sum(t.Price) desc) as RankOfTotalRevenue
 from Airlines a 
 join Flights f on a.AirlineID = f.AirlineID
 join Tickets t on t.FlightID = f.FlightID
 group by a.AirlineID, a.Name;
+
+-- for each passenger, identify their most frequently used airline, if a passenger have multiple, show all
+with CTERank as 
+(
+select p.Name as PassengerName, 
+a.Name as AirlineName, 
+count(*) as CountOfAirline,
+dense_rank() over (partition by p.Name order by count(*) desc) rankofAirlines
+from Passengers p
+join Tickets t on p.PassengerID = t.PassengerID
+join Flights f on t.FlightID = f.FlightID
+join Airlines a on f.AirlineID = a.AirlineID 
+group by p.Name, a.Name
+)
+select PassengerName, 
+AirlineName, 
+CountOfAirline 
+from CTERank 
+where rankofAirlines = 1;
