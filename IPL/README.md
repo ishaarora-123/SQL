@@ -8,6 +8,11 @@ The analysis covers practical SQL problems using **CTEs, Window Functions, Aggre
 
 ---
 
+## 📂 Dataset  
+IPL 2025 squads: 228 players across 10 teams (player, price in ₹ crore, Indian/Overseas, capped/uncapped, retained/auction/RTM, role, team).  
+Run `Insert.sql` to create and load the table, then `question.sql`.
+
+
 ## 📊 Analysis Questions, Concepts & Insights
 
 | #  | Question                                                                | SQL Concepts Used                                    | Key Insight                                                                      |
@@ -81,18 +86,17 @@ Before analysis, the dataset was cleaned using SQL to standardize and extract re
 * `LIMIT`
 
 ---
+  
+  
+## 💡 Key Insights  
+- **Spending is nearly level:** 9 of 10 teams spent between ₹116.55 cr and ₹119.90 cr. KKR is the outlier at ₹107.95 cr.  
+- **Most expensive players:** Rishabh Pant (LSG, ₹27 cr), Shreyas Iyer (PBKS, ₹26.75 cr), Venkatesh Iyer (KKR, ₹23.75 cr). Each takes up about 22% of his team's total spend.  
+- **Star concentration varies:** LSG's top two players take 40% of its spend, while Delhi Capitals' top two take only 26%. Delhi has the most evenly spread squad.  
+- **Most players are cheap:** 151 of 228 players (66%) cost under ₹5 cr; only 21 cost more than ₹15 cr.  
+- **Overseas players cost more on average:** average ₹5.64 cr vs ₹4.97 cr for Indian players, and the median gap is wider (₹2.7 cr vs ₹1.8 cr) because many uncapped Indian players are bought cheaply.  
+- **Top all-rounders:** Ravindra Jadeja (₹18 cr), Hardik Pandya (₹16.35 cr), Abhishek Sharma (₹14 cr).  
+- **Bowlers tie at the top:** five bowlers (Bumrah, Rashid Khan, Arshdeep Singh, Chahal, Cummins) share the highest bowler price of ₹18 cr.  
 
-## 💡 Key Insights
-
-The analysis helps answer questions around:
-
-* **Team spending:** How much each team invests in its players.
-* **High-value players:** Which players command the highest prices overall and within their teams.
-* **Team salary structure:** How player prices are distributed across High, Medium, and Low brackets.
-* **Player contribution:** How much individual players contribute to their team's total spending.
-* **Indian vs Overseas players:** How average prices differ between the two categories.
-* **Role-wise valuation:** Which players are the most expensive within their respective roles.
-* **Relative player value:** Which players are priced above their team's average.
 
 ---
 
