@@ -1,9 +1,14 @@
 select * from IPLPlayers ;
 
 select distinct(`type`) from IPLPlayers;
+
 UPDATE IPLPlayers
 SET Type = REPLACE(Type, 'Overseas(', 'Overseas (')
 WHERE Type LIKE 'Overseas%';
+
+UPDATE IPLPlayers
+SET Type = REPLACE(Type, 'India (', 'Indian (')
+WHERE Type LIKE 'India (%';
 
 ALTER TABLE IPLPlayers
 ADD Players2 NVARCHAR(120);
